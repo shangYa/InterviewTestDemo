@@ -13,19 +13,12 @@ class HomeViewController: UIViewController {
     let tableView = UITableView()
     var timer: Timer?
     var loadHistory = Array<String>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "数据"
         
-        self.view.addSubview(tableView)
-        tableView.frame = self.view.bounds
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 70
-        tableView.showsVerticalScrollIndicator = false
-        tableView.register(UrlAppearenceTableCell.self, forCellReuseIdentifier: "UrlAppearenceTableCellId")
-        
+        self.configTableView()
         self.configRightBarButtomItem()
         
         if let list = UserDefaults.standard.array(forKey: "historyRecoder") as? [String] {
@@ -43,6 +36,17 @@ class HomeViewController: UIViewController {
                 weakSelf.loadGithubData()
             }
         }
+    }
+    
+    func configTableView(){
+        self.view.addSubview(tableView)
+        tableView.frame = self.view.bounds
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 70
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(UrlAppearenceTableCell.self, forCellReuseIdentifier: "UrlAppearenceTableCellId")
     }
     func configRightBarButtomItem(){
         let rightItem = UIButton()
